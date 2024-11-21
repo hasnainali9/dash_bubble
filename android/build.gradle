@@ -2,12 +2,14 @@ group 'dev.moaz.dash_bubble'
 version '1.0-SNAPSHOT'
 
 buildscript {
+    ext.kotlin_version = '1.9.20'  // Updated Kotlin version
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.0'
+        classpath 'com.android.tools.build:gradle:8.1.0'  // Updated Android Gradle plugin
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -19,18 +21,24 @@ allprojects {
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
 
 android {
     compileSdkVersion 33
     namespace "dev.moaz.dash_bubble"
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11    // Updated to Java 11
+        targetCompatibility JavaVersion.VERSION_11    // Updated to Java 11
+    }
+
+    kotlinOptions {
+        jvmTarget = '11'    // Updated to Java 11
     }
 
     sourceSets {
-        main.java.srcDirs += 'src/main/java'
+        main.java.srcDirs += 'src/main/kotlin'
     }
 
     defaultConfig {
@@ -39,7 +47,7 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core:1.9.0'
+    implementation "androidx.core:core-ktx:1.9.0"
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
-    implementation 'io.github.torrydo:floating-bubble-view:0.5.3'
+    implementation("io.github.torrydo:floating-bubble-view:0.5.3")
 }
